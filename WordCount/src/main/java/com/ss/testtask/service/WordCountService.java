@@ -1,4 +1,6 @@
-package com.ss.testtask;
+package com.ss.testtask.service;
+
+import com.ss.testtask.comparator.MapValueComparator;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class WordCountService {
@@ -35,15 +38,19 @@ public class WordCountService {
     }
 
     public Map<String, Integer> filterMapByValueHigherTheOne(Map<String, Integer> wordsAmountMap){
-        Map<String, Integer> result = wordsAmountMap.entrySet().stream()
+        return wordsAmountMap.entrySet().stream()
                 .filter(entry -> entry.getValue() > ONE)
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-        return result;
     }
 
     public void displayMap(Map<String, Integer> result){
-        result.forEach((key, value) -> {
-            System.out.println(value + " " + key);
-        });
+        result.forEach((key, value) -> System.out.println(value + " " + key));
+    }
+
+    public Map<String, Integer> sort(Map<String, Integer> unsortedMap){
+        MapValueComparator mapValueComparator = new MapValueComparator(unsortedMap);
+        TreeMap<String, Integer> result = new TreeMap<>(mapValueComparator);
+        result.putAll(unsortedMap);
+        return result;
     }
 }

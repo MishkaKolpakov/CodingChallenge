@@ -16,8 +16,8 @@ public class GNodeService implements GNodeHandler {
     @Override
     public List<GNode> walkGraph(GNode node) {
         nodesResult.add(node);
-        for (GNode gNode : node.getChildren()) {
-            if (!node.getChildren().isEmpty()) {
+        if(!node.getChildren().isEmpty()){
+            for (GNode gNode : node.getChildren()) {
                 walkGraph(gNode);
             }
         }
@@ -27,22 +27,22 @@ public class GNodeService implements GNodeHandler {
 
     @Override
     public List<List<GNode>> paths(GNode position) {
-        List<List<GNode>> retLists = new ArrayList<>();
+        List<List<GNode>> pathsList = new ArrayList<>();
 
-        if(position.getChildren().isEmpty()) {
+        if (position.getChildren().isEmpty()) {
             List<GNode> leafList = new LinkedList<>();
             leafList.add(position);
-            retLists.add(leafList);
+            pathsList.add(leafList);
         } else {
             for (GNode node : position.getChildren()) {
                 List<List<GNode>> nodeLists = paths(node);
                 for (List<GNode> nodeList : nodeLists) {
                     nodeList.add(0, position);
-                    retLists.add(nodeList);
+                    pathsList.add(nodeList);
                 }
             }
         }
 
-        return retLists;
+        return pathsList;
     }
 }

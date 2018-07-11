@@ -26,14 +26,16 @@ public class GNodeRunner {
         A.getChildren().add(B);
         A.getChildren().add(C);
         A.getChildren().add(D);
+
         B.getChildren().add(E);
         B.getChildren().add(F);
+
         C.getChildren().add(G);
         C.getChildren().add(H);
         C.getChildren().add(I);
 
         List<GNode> nodes = nodeService.walkGraph(B);
-        List<List<GNode>> paths = nodeService.paths(A);
+        List<List<GNode>> paths = nodeService.paths(B);
 
         outputService.displayNodes(nodes);
         outputService.displayPaths(paths);
